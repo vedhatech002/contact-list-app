@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.input-box {
+  @apply border-[1.5px] border-black rounded-sm px-2 py-0.5 placeholder:text-slate-600;
+}
+.label {
+  @apply font-semibold;
+}
