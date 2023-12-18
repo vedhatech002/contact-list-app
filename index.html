@@ -22,189 +22,215 @@
       </div>
     </header>
 
-     <!-- modal -->
-     <section class="bg-[#808080e0]  fixed flex justify-center w-full py-12 hidden ">
+    <!-- modal -->
+    <section
+      id="modal"
+      class="bg-[#808080e0] fixed flex justify-center w-full py-12 hidden"
+    >
       <div class="bg-white max-w-fit rounded">
         <!-- modal head -->
-        <div class="bg-orange-400 rounded-tl rounded-tr text-white py-4 px-5 flex items-center justify-between">
+        <div
+          class="bg-orange-400 rounded-tl rounded-tr text-white py-4 px-5 flex items-center justify-between"
+        >
           <h2 class="font-semibold text-lg">Add Adresss</h2>
-          <button type="button" id = "close-btn">
-            <i class = "fas fa-times"></i>
-        </button>
+          <button type="button" id="modal-close-btn">
+            <i class="fas fa-times"></i>
+          </button>
         </div>
         <!-- modal head end -->
         <!-- modal body -->
-        <form name="inputForm" class="px-5 py-4  flex flex-col  gap-4 items-start justify-center">
+        <form
+          name="inputForm"
+          class="px-5 py-4 flex flex-col gap-4 items-start justify-center"
+        >
           <!-- name -->
-          <div class="flex items-center gap-4 ">
-           <div  class="flex  flex-col items-start gap-1 ">
-             <label class="label"  for="firstname">First Name</label>
-             <input class="input-box" type="text" name="firstname" id="firstname" placeholder=" first name">
-           </div>
-           <div  class="flex flex-col items-start gap-1">
-             <label class="label"  for="lastname">Last Name</label>
-             <input  class="input-box" type="text" name="lastname" id="lastname" placeholder=" last name">
-           </div>
+          <div class="flex items-center gap-4">
+            <div class="flex flex-col items-start gap-1">
+              <label class="label" for="firstname">First Name</label>
+              <input
+                class="input-box"
+                type="text"
+                name="firstname"
+                id="firstname"
+                placeholder=" first name"
+                required
+              />
+            </div>
+            <div class="flex flex-col items-start gap-1">
+              <label class="label" for="lastname">Last Name</label>
+              <input
+                class="input-box"
+                type="text"
+                name="lastname"
+                id="lastname"
+                placeholder=" last name"
+                required
+              />
+            </div>
           </div>
-    <!-- name end -->
+          <!-- name end -->
 
-     <!-- email and phone -->
-    <div class="flex items-center gap-4 ">
-      <div  class="flex  flex-col items-start gap-1 ">
-        <label class="label"  for="email">Email</label>
-        <input class="input-box" type="email" name="email" id="email" placeholder="name@email.com">
-      </div>
-      <div  class="flex flex-col items-start gap-1 ">
-         <label class="label"  for="phone">Phone</label>
-         <input  class="input-box " type="number" name="phone" id="phone" placeholder=" phone number">
-      </div>
-    </div>
-<!-- email and phone END -->
+          <!-- email and phone -->
+          <div class="flex items-center gap-4">
+            <div class="flex flex-col items-start gap-1">
+              <label class="label" for="email">Email</label>
+              <input
+                class="input-box"
+                type="email"
+                name="email"
+                id="email"
+                placeholder="name@email.com"
+                required
+              />
+            </div>
+            <div class="flex flex-col items-start gap-1">
+              <label class="label" for="phone">Phone</label>
+              <input
+                class="input-box"
+                type="number"
+                name="phone"
+                id="phone"
+                placeholder=" phone number"
+                required
+              />
+            </div>
+          </div>
+          <!-- email and phone END -->
 
-<!-- street adress -->
-      <div class="flex items-center gap-4 justify-center">
-        <div  class="flex  flex-col items-start gap-1 ">
-          <label class="label"  for="streetAdr">Street Address</label>
-          <input class="input-box" type="text" name="streetAdr" id="streetAdr" placeholder="house no,street,place">
-        </div>
-        <div  class="flex flex-col items-start gap-1  ">
-           <label class="label"  for="city">City</label>
-           <input  class="input-box " type="text" name="city" id="city" placeholder="city name">
-        </div>
-      </div>
-<!-- street end -->
-<!-- district and state -->
-<div class="flex items-center gap-4 justify-center">
-  <div  class="flex  flex-col items-start gap-1 ">
-    <label class="label"  for="district">District</label>
-    <select class="input-box w-[200px]" id = "district" name = "district">
-      <option >--select districtt--</option>
-      <option >Nagappatinam</option>
-  </select>
-  
-  </div>
-  <div  class="flex flex-col items-start gap-1  ">
-     <label class="label"  for="state">State</label>
-     <select class="input-box w-[200px]" id = "state" name = "state">
-      <option >--select state--</option>
-      <option >TamilNadu</option>
-  </select>
-  </div>
-</div>
-<!-- district and state end -->
+          <!-- street adress -->
+          <div class="flex items-center gap-4 justify-center">
+            <div class="flex flex-col items-start gap-1">
+              <label class="label" for="streetAdr">Street Address</label>
+              <input
+                class="input-box"
+                type="text"
+                name="streetAdr"
+                id="streetAdr"
+                placeholder="house no,street,place"
+                required
+              />
+            </div>
+            <div class="flex flex-col items-start gap-1">
+              <label class="label" for="city">City</label>
+              <input
+                class="input-box"
+                type="text"
+                name="city"
+                id="city"
+                placeholder="city name"
+                required
+              />
+            </div>
+          </div>
+          <!-- street end -->
+          <!-- district and state -->
+          <div class="flex items-center gap-4 justify-center">
+            <div class="flex flex-col items-start gap-1">
+              <label class="label" for="district">District</label>
+              <select
+                class="input-box w-[200px]"
+                id="district"
+                name="district"
+                required
+              >
+                <option value="nagappatinam">Nagappatinam</option>
+              </select>
+            </div>
+            <div class="flex flex-col items-start gap-1">
+              <label class="label" for="state">State</label>
+              <select
+                class="input-box w-[200px]"
+                id="state"
+                name="state"
+                required
+              >
+                <option value="tamilnadu">TamilNadu</option>
+              </select>
+            </div>
+          </div>
+          <!-- district and state end -->
 
-<!--contact label  -->
-<div class="flex flex-col items-start gap-1 justify-center ">
-  <label class="label"  for="city">Labelsy</label>
-  <select class="input-box w-[420px]" id = "state" name = "state">
-   <option >--select label--</option>
-   <option >freind</option>
-</select>
-</div>
-<!-- contact label end -->
+          <!--contact label  -->
+          <div class="flex flex-col items-start gap-1 justify-center">
+            <label class="label" for="lanel">Labels</label>
+            <select
+              class="input-box w-[420px]"
+              id="label"
+              name="label"
+              required
+            >
+              <option value="freind">freind</option>
+              <option value="famly">family</option>
+              <option value="freind">collegues</option>
+            </select>
+          </div>
+          <!-- contact label end -->
 
-<!-- button -->
-<div class="ml-0">
- <button class="bg-orange-400 px-4 py-1 text-white font-semibold  rounded-sm">Save</button>
- <button class="bg-orange-400 px-4 py-1 text-white font-semibold  rounded-sm hidden" >Edit</button>
- <button class="bg-orange-400 px-4 py-1 text-white font-semibold  rounded-sm hidden">Delete</button>
-</div>
-
-
-
-
-
-
-
-
-
+          <!-- button -->
+          <div class="ml-0">
+            <button
+              class="bg-orange-400 px-4 py-1 text-white font-semibold rounded-sm"
+            >
+              Save
+            </button>
+            <button
+              class="bg-orange-400 px-4 py-1 text-white font-semibold rounded-sm hidden"
+            >
+              Edit
+            </button>
+            <button
+              class="bg-orange-400 px-4 py-1 text-white font-semibold rounded-sm hidden"
+            >
+              Delete
+            </button>
+          </div>
         </form>
       </div>
-     </section>
+    </section>
 
     <!-- show  list -->
     <main class="bg-slate-300 px-20">
       <div class="bg-white min-h-[89vh]">
         <!-- options -->
         <section class="py-5 px-5 border-b-[1.5px] border-slate-300">
-          <button class="bg-orange-400 text-white px-4 py-2 rounded font-semibold"  > <span><i class = "fas fa-plus"></i> Add Contact List</button>
+          <button
+            id="add-contact"
+            class="bg-orange-400 text-white px-4 py-2 rounded font-semibold"
+          >
+            <span><i class="fas fa-plus"></i></span> Add Contact List
+          </button>
         </section>
         <!-- contact list -->
         <section>
-          <table class = " w-full">
+          <table class="w-full">
             <thead class="">
-                <tr>
-                    <th class="py-4">ID</th>
-                    <th>Name</th>
-                    <th>Address</th>
-                    <th>Labels</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                </tr>
+              <tr>
+                <th class="py-4">ID</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Labels</th>
+                <th>Email</th>
+                <th>Phone</th>
+              </tr>
             </thead>
-            <tbody class = "text-center text-gray-500 ">
-                <tr class="hover:bg-orange-400 cursor-pointer">
-                    <td class="py-4">1</td>
-                    <td class="font-semibold text-gray-700">vijayavedhasekaran</td>
-                    <td class="text-center">
-                       Johnson Street - 5668, Lake side</span>
-                    </td>
-                    <td><span class="bg-slate-200 px-2 py-1 rounded text-gray-700">Colleagues</span></td>
-                    <td>sharif@gmail.com</td>
-                    <td>123-456-7890</td>
-                </tr>
-               
+            <tbody id="contact-list" class="text-center text-gray-500">
+              <!-- <tr class="hover:bg-orange-400 cursor-pointer">
+                <td class="py-4">1</td>
+                <td class="font-semibold text-gray-700">vijayavedhasekaran</td>
+                <td class="text-center">Johnson Street - 5668, Lake side</td>
+                <td>
+                  <span class="bg-slate-200 px-2 py-1 rounded text-gray-700"
+                    >Colleagues</span
+                  >
+                </td>
+                <td>sharif@gmail.com</td>
+                <td>123-456-7890</td>
+              </tr> -->
             </tbody>
-        </table>
+          </table>
         </section>
-       
-    
-       
-
-
       </div>
     </main>
-
-  
-
-
-    <!-- <h1 class="bg-slate-500">Adreess app</h1>
-    <form
-      name="inputNames"
-      class="flex flex-col max-w-[768px] gap-4 mx-auto justify-center items-center mt-16"
-    >
-      <input type="text" name="fullname" id="" placeholder=" fullname" />
-      <input type="email" name="email" id="" placeholder=" email" />
-      <input type="tel" name="phone" id="" placeholder="phone" />
-      <input type="text" name="streetAddress" placeholder="adress" />
-      <input type="text" name="city" id="" placeholder="city" />
-      <button>submit</button>
-    </form>
-
-    <main>
-      <table
-        class="border-separate border border-slate-500 bg-slate-800 text-white mx-auto"
-      >
-        <thead>
-          <tr>
-            <th class="border border-slate-600">Name</th>
-            <th class="border border-slate-600">email</th>
-            <th class="border border-slate-600">phone</th>
-            <th class="border border-slate-600">street</th>
-            <th class="border border-slate-600">city</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="border border-slate-700">Indiana</td>
-            <td class="border border-slate-700">Indianapolis</td>
-            <td class="border border-slate-700">Indianapolis</td>
-            <td class="border border-slate-700">Indianapolis</td>
-            <td class="border border-slate-700">Indianapolis</td>
-          </tr>
-        </tbody>
-      </table>
-    </main> -->
     <script src="./src/js/main..js"></script>
   </body>
 </html>
