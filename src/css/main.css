@@ -3,8 +3,11 @@
 @tailwind utilities;
 
 .input-box {
-  @apply border-[1.5px] border-black rounded-sm px-2 py-0.5 placeholder:text-slate-600;
+  @apply border-[1px] border-gray-400 rounded-sm px-2 py-0.5 placeholder:text-slate-600 focus:border-gray-600 focus:border-[1.5px] outline-none;
 }
 .label {
-  @apply font-semibold;
+  @apply text-gray-600 font-semibold;
+}
+.errormsg {
+  @apply text-red-500 text-xs absolute top-14 pl-1 pt-1;
 }
