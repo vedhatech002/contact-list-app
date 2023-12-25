@@ -4,6 +4,21 @@ const modalEl = document.querySelector("#modal");
 const modalClosebtn = document.querySelector("#modal-close-btn");
 const formEl = document.forms.inputForm;
 const contactList = document.querySelector("#contact-list");
+const modalTitle = document.querySelector("#modal-title");
+const saveBtn = document.querySelector("#save");
+const updateBtn = document.querySelector("#update");
+const deleteBtn = document.querySelector("#delete");
+const {
+  firstname,
+  lastname,
+  email,
+  phone,
+  streetAdr,
+  city,
+  district,
+  state,
+  label,
+} = formEl.elements;
 
 let contactDetails;
 
@@ -59,6 +74,7 @@ const handleFormdata = (e) => {
   if (isFormValid) {
     formData.append("id", contactDetails.length + 1);
     const getFormData = Object.fromEntries(formData);
+    console.log(getFormData); //show in console
     transferToDatabase(getFormData);
     contactList.innerHTML = ""; //clear innerhtml  while add data
     getContactDetails();
@@ -79,6 +95,83 @@ function transferToDatabase(data) {
 
   //getting datas from database
   //   console.log(contactDetails);
+}
+
+contactList.addEventListener("click", (e) => {
+  let target = e.target;
+  // console.log(target);
+  if (target.tagName === "TD") {
+    let getid = target.parentElement.dataset.id;
+    let availableData;
+    contactDetails.forEach((el) => {
+      if (el.id === getid) {
+        availableData = el;
+      }
+    });
+    deleteBtn.setAttribute("data-id", getid);
+    updateBtn.setAttribute("data-id", getid);
+    showModalForm(availableData);
+  }
+});
+
+function showModalForm(dataobj) {
+  openModal();
+  showmodalData(dataobj);
+  modalTitle.innerText = "Update or Delete Contact";
+  saveBtn.classList.add("hidden");
+  updateBtn.classList.remove("hidden");
+  deleteBtn.classList.remove("hidden");
+}
+//delete
+// delete operations
+deleteBtn.addEventListener("click", (e) => {
+  let currentId = e.target.dataset.id;
+  contactDetails.forEach((el, index) => {
+    if (el.id === currentId) {
+      contactDetails.splice(index, 1);
+    }
+  });
+  localStorage.setItem("contactList", JSON.stringify(contactDetails));
+  contactList.innerHTML = "";
+  contactDetails.forEach((el) => showUi(el));
+  closeModal();
+});
+//end
+
+//update operation
+updateBtn.addEventListener("click", (e) => {
+  let currentId = e.target.dataset.id;
+  contactDetails.forEach((el) => {
+    if (el.id === currentId) {
+      el.firstname = firstname.value;
+      el.lastname = lastname.value;
+      el.email = email.value;
+      el.phone = phone.value;
+      el.streetAdr = streetAdr.value;
+      el.city = city.value;
+      el.district = district.value;
+      el.state = state.value;
+      el.label = label.value;
+      localStorage.setItem("contactList", JSON.stringify(contactDetails));
+    }
+  });
+
+  contactList.innerHTML = "";
+  contactDetails.forEach((dataobj) => showUi(dataobj));
+  closeModal();
+});
+//end
+
+function showmodalData(dataobj) {
+  firstname.value = dataobj.firstname;
+  lastname.value = dataobj.lastname;
+  email.value = dataobj.email;
+  phone.value = dataobj.phone;
+  streetAdr.value = dataobj.streetAdr;
+  city.value = dataobj.city;
+  district.value = dataobj.district;
+  state.value = dataobj.state;
+  label.value = dataobj.label;
 }
 
 function showUi(data) {
@@ -107,117 +200,17 @@ function openModal() {
 }
 function closeModal() {
   modalEl.classList.add("hidden");
+  saveBtn.classList.remove("hidden");
+  updateBtn.classList.add("hidden");
+  deleteBtn.classList.add("hidden");
+  formEl.reset();
 }
 
 addContactBtnEl.addEventListener("click", openModal);
 modalClosebtn.addEventListener("click", closeModal);
 
-// function validation(formData) {
-//   let firstName = formData.get("firstname");
-//   let lastName = formData.get("lastname");
-//   let email = formData.get("email");
-//   let phone = formData.get("phone");
-//   let streetAdr = formData.get("streetAdr");
-//   let city = formData.get("city");
+// validations part start============================================
 
-//   //show errormsg
-//   function showErrorMsg(fieldName, message) {
-//     const errorFieldEl = formEl.elements[fieldName];
-//     const errorMsgEl = document.createElement("small");
-//     errorMsgEl.classList.add("errormsg");
-//     errorMsgEl.innerText = message;
-
-//     //existing error msg
-//     const existingError = errorFieldEl.nextElementSibling;
-//     if (existingError && existingError.className === "errormsg") {
-//       existingError.replaceWith(errorFieldEl);
-//     } else {
-//       errorFieldEl.after(errorMsgEl);
-//     }
-//   }
-//   // // showErrorMsg("firstname", "hello im error");
-//   //clear error msg
-//   document.querySelectorAll(".errormsg").forEach((el) => el.remove());
-
-//   // check required
-//   if (!firstName) {
-//     showErrorMsg("firstname", "required");
-//     return false;
-//   }
-//   if (!lastName) {
-//     showErrorMsg("lastname", "required");
-//     return false;
-//   }
-//   if (!email) {
-//     showErrorMsg("email", "required");
-//     return false;
-//   }
-//   if (!phone) {
-//     showErrorMsg("phone", "required");
-//     return false;
-//   }
-//   if (!streetAdr) {
-//     showErrorMsg("streetAdr", "required");
-//     return false;
-//   }
-//   if (!city) {
-//     showErrorMsg("city", "required");
-//     return false;
-//   }
-//   //other validation
-//   const strRegex = /^[a-zA-Z\s]*$/; // containing only letters
-//   let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; //email
-//   let phoneRegex = /^\d{10}$/; //phone number contain only 10 numbers
-
-//   if (!strRegex.test(firstName)) {
-//     showErrorMsg("firstname", "contains only alphabets");
-//     return false;
-//   }
-//   if (!strRegex.test(lastName)) {
-//     showErrorMsg("lastname", "contains only alphabets");
-//     return false;
-//   }
-//   if (!emailRegex.test(email)) {
-//     showErrorMsg("email", "check the email format");
-//     return false;
-//   }
-//   if (!phoneRegex.test(phone)) {
-//     showErrorMsg("phone", "phone number shoud have 10 digits");
-//     return false;
-//   }
-//   if (!strRegex.test(city)) {
-//     showErrorMsg("city", "contains only alphabets");
-//     return false;
-//   }
-//   if (streetAdr.length < 5) {
-//     showErrorMsg("streetAdr", "street address should have 5 characters");
-//     return false;
-//   }
-
-//   return true;
-// }
-
-// function showErrorMsg(el, message) {
-//   const errorMsgEl = document.createElement("small");
-//   errorMsgEl.classList.add("errormsg");
-//   errorMsgEl.innerText = message;
-
-//   //existing error msg
-//   const existingError = el.nextElementSibling;
-//   if (existingError && existingError.className === "errormsg") {
-//     existingError.replaceWith(errorMsgEl);
-//   } else {
-//     el.after(errorMsgEl);
-//   }
-
-//   // // showErrorMsg("firstname", "hello im error");
-//   //clear error msg
-//   // formEl.querySelectorAll(".errormsg").forEach((elements) => elements.remove());
-// }
-
-//new method
-
-//utility fuctions => resuable function i
 const isRequired = (value) => (value === "" ? false : true);
 const isBetween = (length, min, max) =>
   length < min || length > max ? false : true;
@@ -240,24 +233,6 @@ function showErrorMsg(fieldName, message) {
   SmallTag.innerText = " ";
   SmallTag.innerText = message;
 }
-
-// function clearMsg(fieldName) {
-//   fieldName.nextElementSibling.remove();
-//   console.log(fieldName.name, "success");
-// }
-
-console.log(formEl.elements);
-const {
-  firstname,
-  lastname,
-  email,
-  phone,
-  streetAdr,
-  city,
-  district,
-  state,
-  label,
-} = formEl.elements;
 
 const checkFirstName = () => {
   let valid = false;
@@ -393,3 +368,5 @@ const checkLabel = () => {
   }
   return valid;
 };
+
+// validation end==========================================//

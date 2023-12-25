@@ -25,14 +25,14 @@
     <!-- modal -->
     <section
       id="modal"
-      class="bg-[#808080e0] fixed flex justify-center w-full py-8 hidden"
+      class="bg-[#808080e0] fixed flex justify-center w-full py-10 hidden"
     >
       <div class="bg-white max-w-fit rounded">
         <!-- modal head -->
         <div
           class="bg-orange-400 rounded-tl rounded-tr text-white py-4 px-5 flex items-center justify-between"
         >
-          <h2 class="font-semibold text-lg">Add Addresss</h2>
+          <h2 class="font-semibold text-lg" id="modal-title">Add Contact</h2>
           <button type="button" id="modal-close-btn">
             <i class="fas fa-times"></i>
           </button>
@@ -41,7 +41,7 @@
         <!-- modal body -->
         <form
           name="inputForm"
-          class="px-5 py-4 flex flex-col gap-[1.5rem] items-start justify-center"
+          class="px-5 py-4 flex flex-col gap-[1.1rem] items-start justify-center"
         >
           <!-- name -->
           <div class="flex items-center gap-4">
@@ -92,6 +92,7 @@
                 id="phone"
                 placeholder=" phone number"
                 maxlength="10"
+                minlength="10"
               />
               <small class="errormsg"></small>
             </div>
@@ -159,19 +160,24 @@
           <!-- contact label end -->
 
           <!-- button -->
-          <div class="ml-0">
+          <div class="ml-0 mt-1">
             <button
-              class="bg-orange-400 px-4 py-1 text-white font-semibold rounded-sm"
+              id="save"
+              class="bg-green-700 px-4 py-1 text-white font-semibold rounded-sm"
             >
               Save
             </button>
             <button
+              id="update"
+              type="button"
               class="bg-orange-400 px-4 py-1 text-white font-semibold rounded-sm hidden"
             >
-              Edit
+              Update
             </button>
             <button
-              class="bg-orange-400 px-4 py-1 text-white font-semibold rounded-sm hidden"
+              id="delete"
+              type="button"
+              class="bg-red-600 px-4 py-1 text-white font-semibold rounded-sm hidden"
             >
               Delete
             </button>
