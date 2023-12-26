@@ -1,4 +1,4 @@
-//get html elements via query selectors
+/*===============================Getting Html Elements via query selector================================*/
 const addContactBtnEl = document.querySelector("#add-contact");
 const modalEl = document.querySelector("#modal");
 const modalClosebtn = document.querySelector("#modal-close-btn");
@@ -8,6 +8,7 @@ const modalTitle = document.querySelector("#modal-title");
 const saveBtn = document.querySelector("#save");
 const updateBtn = document.querySelector("#update");
 const deleteBtn = document.querySelector("#delete");
+//getting form elements using destructuring
 const {
   firstname,
   lastname,
@@ -20,28 +21,21 @@ const {
   label,
 } = formEl.elements;
 
-let contactDetails;
+/*====================================getting local storage and assiging in array to perform operations =======================================*/
 
-//getting localstorage and assign values to variable and show ui based on data stored in local storage
-function getContactDetails() {
-  if (localStorage.getItem("contactList") == null) {
-    contactDetails = [];
-  } else {
-    contactDetails = JSON.parse(localStorage.getItem("contactList"));
-    contactDetails.forEach((dataobj) => showUi(dataobj));
-  }
+let contactDetailsArr;
+if (localStorage.getItem("contactList") === null) {
+  contactDetailsArr = [];
+} else {
+  contactDetailsArr = JSON.parse(localStorage.getItem("contactList"));
 }
 
-document.addEventListener("DOMContentLoaded", getContactDetails); // shows datas while on load
+/*=============================handle event functions================================*/
 
 //handle submit event
 const handleSubmit = (e) => {
   e.preventDefault();
-
   const formData = new FormData(formEl);
-  //   console.log(...formData);
-
-  //   console.log(getFormData);
 };
 
 //handle form data event
@@ -72,97 +66,115 @@ const handleFormdata = (e) => {
   // console.log(validStatus);
 
   if (isFormValid) {
-    formData.append("id", contactDetails.length + 1);
+    formData.append("id", contactDetailsArr.length + 1);
     const getFormData = Object.fromEntries(formData);
     console.log(getFormData); //show in console
-    transferToDatabase(getFormData);
+    transferDataToLocalstorage(getFormData);
     contactList.innerHTML = ""; //clear innerhtml  while add data
-    getContactDetails();
+    passArrDataToDisplay();
     formEl.reset(); // reset forms value
     closeModal();
   }
 };
+/*=================================Event listners=====================================*/
+
+document.addEventListener("DOMContentLoaded", passArrDataToDisplay);
 
 formEl.addEventListener("submit", handleSubmit);
+
 formEl.addEventListener("formdata", handleFormdata);
 
-function transferToDatabase(data) {
-  contactDetails.push(data); //store in database
-  let database = localStorage.setItem(
-    "contactList",
-    JSON.stringify(contactDetails)
-  );
+addContactBtnEl.addEventListener("click", openModal);
 
-  //getting datas from database
-  //   console.log(contactDetails);
-}
+modalClosebtn.addEventListener("click", closeModal);
 
+//click event to show data in contact list
 contactList.addEventListener("click", (e) => {
   let target = e.target;
-  // console.log(target);
+  //   console.log(target.parentElement);
   if (target.tagName === "TD") {
     let getid = target.parentElement.dataset.id;
     let availableData;
-    contactDetails.forEach((el) => {
-      if (el.id === getid) {
+    contactDetailsArr.forEach((el) => {
+      if (el.id == getid) {
         availableData = el;
       }
     });
     deleteBtn.setAttribute("data-id", getid);
     updateBtn.setAttribute("data-id", getid);
-    showModalForm(availableData);
+    displayFormWithSelectedContactData(availableData);
   }
 });
 
-function showModalForm(dataobj) {
-  openModal();
-  showmodalData(dataobj);
-  modalTitle.innerText = "Update or Delete Contact";
-  saveBtn.classList.add("hidden");
-  updateBtn.classList.remove("hidden");
-  deleteBtn.classList.remove("hidden");
-}
-//delete
-// delete operations
+//delete operation
 deleteBtn.addEventListener("click", (e) => {
   let currentId = e.target.dataset.id;
-  contactDetails.forEach((el, index) => {
+  contactDetailsArr.forEach((el, index) => {
     if (el.id === currentId) {
-      contactDetails.splice(index, 1);
+      contactDetailsArr.splice(index, 1);
     }
   });
-  localStorage.setItem("contactList", JSON.stringify(contactDetails));
+  //   contactDetailsArr = contactDetailsArr.filter(
+  //     (element) => element.id !== currentId
+  //   );
+  setLocalStorage();
   contactList.innerHTML = "";
-  contactDetails.forEach((el) => showUi(el));
+  passArrDataToDisplay();
   closeModal();
 });
-//end
+/*=====================================Utility functions=========================================*/
 
-//update operation
-updateBtn.addEventListener("click", (e) => {
-  let currentId = e.target.dataset.id;
-  contactDetails.forEach((el) => {
-    if (el.id === currentId) {
-      el.firstname = firstname.value;
-      el.lastname = lastname.value;
-      el.email = email.value;
-      el.phone = phone.value;
-      el.streetAdr = streetAdr.value;
-      el.city = city.value;
-      el.district = district.value;
-      el.state = state.value;
-      el.label = label.value;
-      localStorage.setItem("contactList", JSON.stringify(contactDetails));
-    }
-  });
+//set local storage with current datas
+function transferDataToLocalstorage(data) {
+  contactDetailsArr.push(data); //store in database
+  setLocalStorage();
+}
+function setLocalStorage() {
+  localStorage.setItem("contactList", JSON.stringify(contactDetailsArr));
+}
+//passing arr data to display contact details
+function passArrDataToDisplay() {
+  contactDetailsArr.forEach((el) => createTrUi(el));
+}
 
-  contactList.innerHTML = "";
-  contactDetails.forEach((dataobj) => showUi(dataobj));
-  closeModal();
-});
-//end
+//function to create table row with contact details and append in table body
+function createTrUi(data) {
+  const tableRow = document.createElement("tr");
+  tableRow.classList.add("hover:bg-orange-400", "cursor-pointer");
+  tableRow.setAttribute("data-id", data.id);
+  console.log(data.id);
+  tableRow.innerHTML = `
+      
+      <td class="py-4">${data.id}</td>
+      <td class="font-semibold text-gray-700">${data.firstname}</td>
+      <td class="text-center">${data.streetAdr}</td>
+      <td>
+        <span class="bg-slate-200 px-2 py-1 rounded text-gray-700"
+          >${data.label}</span
+        >
+      </td>
+      <td>${data.email}
+      </td>
+      <td>${data.phone}</td>
+    `;
+  contactList.appendChild(tableRow);
+}
 
-function showmodalData(dataobj) {
+function openModal() {
+  modalEl.classList.remove("hidden");
+}
+
+function closeModal() {
+  modalEl.classList.add("hidden");
+  saveBtn.classList.remove("hidden");
+  updateBtn.classList.add("hidden");
+  deleteBtn.classList.add("hidden");
+  formEl.reset();
+}
+
+function displayFormWithSelectedContactData(dataobj) {
+  openModal();
+
   firstname.value = dataobj.firstname;
   lastname.value = dataobj.lastname;
   email.value = dataobj.email;
@@ -172,44 +184,15 @@ function showmodalData(dataobj) {
   district.value = dataobj.district;
   state.value = dataobj.state;
   label.value = dataobj.label;
+
+  modalTitle.innerText = "Update or Delete Contact";
+
+  saveBtn.classList.add("hidden");
+  updateBtn.classList.remove("hidden");
+  deleteBtn.classList.remove("hidden");
 }
 
-function showUi(data) {
-  const tableRow = document.createElement("tr");
-  tableRow.classList.add("hover:bg-orange-400", "cursor-pointer");
-  tableRow.setAttribute("data-id", data.id);
-  tableRow.innerHTML = `
-    
-    <td class="py-4">${data.id}</td>
-    <td class="font-semibold text-gray-700">${data.firstname}</td>
-    <td class="text-center">${data.streetAdr}</td>
-    <td>
-      <span class="bg-slate-200 px-2 py-1 rounded text-gray-700"
-        >${data.label}</span
-      >
-    </td>
-    <td>${data.email}
-    </td>
-    <td>${data.phone}</td>
-  `;
-  contactList.appendChild(tableRow);
-}
-
-function openModal() {
-  modalEl.classList.remove("hidden");
-}
-function closeModal() {
-  modalEl.classList.add("hidden");
-  saveBtn.classList.remove("hidden");
-  updateBtn.classList.add("hidden");
-  deleteBtn.classList.add("hidden");
-  formEl.reset();
-}
-
-addContactBtnEl.addEventListener("click", openModal);
-modalClosebtn.addEventListener("click", closeModal);
-
-// validations part start============================================
+/*=================================validation functions===================================*/
 
 const isRequired = (value) => (value === "" ? false : true);
 const isBetween = (length, min, max) =>
@@ -368,5 +351,4 @@ const checkLabel = () => {
   }
   return valid;
 };
-
-// validation end==========================================//
+/*=================================validation functions end===================================*/
