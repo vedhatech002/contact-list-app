@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from "uuid"; // importing uuid
+
 /*===============================Getting Html Elements via query selector================================*/
 const addContactBtnEl = document.querySelector("#add-contact");
 const modalEl = document.querySelector("#modal");
@@ -66,7 +68,7 @@ const handleFormdata = (e) => {
   // console.log(validStatus);
 
   if (isFormValid) {
-    formData.append("id", contactDetailsArr.length + 1);
+    formData.append("id", uuidv4());
     const getFormData = Object.fromEntries(formData);
     console.log(getFormData); //show in console
     transferDataToLocalstorage(getFormData);
@@ -122,6 +124,27 @@ deleteBtn.addEventListener("click", (e) => {
   passArrDataToDisplay();
   closeModal();
 });
+//update opertion
+updateBtn.addEventListener("click", (e) => {
+  let currentId = e.target.dataset.id;
+  contactDetailsArr.forEach((el) => {
+    if (el.id === currentId) {
+      el.firstname = firstname.value;
+      el.lastname = lastname.value;
+      el.email = email.value;
+      el.phone = phone.value;
+      el.streetAdr = streetAdr.value;
+      el.city = city.value;
+      el.district = district.value;
+      el.state = state.value;
+      el.label = label.value;
+    }
+  });
+  setLocalStorage();
+  contactList.innerHTML = "";
+  passArrDataToDisplay();
+  closeModal();
+});
 /*=====================================Utility functions=========================================*/
 
 //set local storage with current datas
@@ -142,10 +165,10 @@ function createTrUi(data) {
   const tableRow = document.createElement("tr");
   tableRow.classList.add("hover:bg-orange-400", "cursor-pointer");
   tableRow.setAttribute("data-id", data.id);
-  console.log(data.id);
+
   tableRow.innerHTML = `
       
-      <td class="py-4">${data.id}</td>
+      <td class="py-4">${contactDetailsArr.length}</td>
       <td class="font-semibold text-gray-700">${data.firstname}</td>
       <td class="text-center">${data.streetAdr}</td>
       <td>
