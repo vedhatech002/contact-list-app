@@ -3,11 +3,232 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
+    <title>Contact List App</title>
     <link rel="stylesheet" href="./src/css/main.css" />
+    <!-- font awesome icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
   </head>
   <body>
-    <h1 class="bg-slate-500">Adreess app</h1>
-    <script src="./src/js/main..js"></script>
+    <header class="bg-orange-400 px-4 py-5">
+      <div class="flex items-center justify-center gap-4 text-white">
+        <i class="fa-solid fa-address-book fa-2x"></i>
+        <h2 class="text-2xl text-center font-semibold">Contact list App</h2>
+      </div>
+    </header>
+
+    <!-- modal -->
+    <section
+      id="modal"
+      class="bg-[#808080e0] fixed flex justify-center w-full py-10 hidden"
+    >
+      <div class="bg-white max-w-fit rounded">
+        <!-- modal head -->
+        <div
+          class="bg-orange-400 rounded-tl rounded-tr text-white py-4 px-5 flex items-center justify-between"
+        >
+          <h2 class="font-semibold text-lg" id="modal-title">Add Contact</h2>
+          <button type="button" id="modal-close-btn">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <!-- modal head end -->
+        <!-- modal body -->
+        <form
+          name="inputForm"
+          class="px-5 py-4 flex flex-col gap-[1.1rem] items-start justify-center"
+        >
+          <!-- name -->
+          <div class="flex items-center gap-4">
+            <div class="flex flex-col items-start gap-1 relative">
+              <label class="label" for="firstname">First Name</label>
+              <input
+                class="input-box"
+                type="text"
+                name="firstname"
+                id="firstname"
+                placeholder=" first name"
+              />
+              <small class="errormsg"></small>
+            </div>
+            <div class="flex flex-col items-start gap-1 relative">
+              <label class="label" for="lastname">Last Name</label>
+              <input
+                class="input-box"
+                type="text"
+                name="lastname"
+                id="lastname"
+                placeholder=" last name"
+              />
+              <small class="errormsg"></small>
+            </div>
+          </div>
+          <!-- name end -->
+
+          <!-- email and phone -->
+          <div class="flex items-center gap-4">
+            <div class="flex flex-col items-start gap-1 relative">
+              <label class="label" for="email">Email</label>
+              <input
+                class="input-box"
+                type="email"
+                name="email"
+                id="email"
+                placeholder="name@email.com"
+              />
+              <small class="errormsg"></small>
+            </div>
+            <div class="flex flex-col items-start gap-1 relative">
+              <label class="label" for="phone">Phone</label>
+              <input
+                class="input-box"
+                type="number"
+                name="phone"
+                id="phone"
+                placeholder=" phone number"
+                maxlength="10"
+                minlength="10"
+              />
+              <small class="errormsg"></small>
+            </div>
+          </div>
+          <!-- email and phone END -->
+
+          <!-- street adress -->
+          <div class="flex items-center gap-4 justify-center">
+            <div class="flex flex-col items-start gap-1 relative">
+              <label class="label" for="streetAdr">Street Address</label>
+              <input
+                class="input-box"
+                type="text"
+                name="streetAdr"
+                id="streetAdr"
+                placeholder="house no,street,place"
+              />
+              <small class="errormsg"></small>
+            </div>
+            <div class="flex flex-col items-start gap-1 relative">
+              <label class="label" for="city">City</label>
+              <input
+                class="input-box"
+                type="text"
+                name="city"
+                id="city"
+                placeholder="city name"
+              />
+              <small class="errormsg"></small>
+            </div>
+          </div>
+          <!-- street end -->
+          <!-- district and state -->
+          <div class="flex items-center gap-4 justify-center">
+            <div class="flex flex-col items-start gap-1 relative">
+              <label class="label" for="district">District</label>
+              <select class="input-box w-[200px]" id="district" name="district">
+                <option value="">Select District</option>
+                <option value="nagappatinam">Nagappatinam</option>
+              </select>
+              <small class="errormsg"></small>
+            </div>
+            <div class="flex flex-col items-start gap-1 relative">
+              <label class="label" for="state">State</label>
+              <select class="input-box w-[200px]" id="state" name="state">
+                <option value="">select State</option>
+                <option value="tamilnadu">TamilNadu</option>
+              </select>
+              <small class="errormsg"></small>
+            </div>
+          </div>
+          <!-- district and state end -->
+
+          <!--contact label  -->
+          <div class="flex flex-col items-start gap-1 relative justify-center">
+            <label class="label" for="lanel">Labels</label>
+            <select class="input-box w-[420px]" id="label" name="label">
+              <option value="">select label</option>
+              <option value="freind">friend</option>
+              <option value="families">families</option>
+              <option value="collegues">collegues</option>
+            </select>
+            <small class="errormsg"></small>
+          </div>
+          <!-- contact label end -->
+
+          <!-- button -->
+          <div class="ml-0 mt-1" id="modal-btns">
+            <button
+              id="save"
+              class="bg-green-700 px-4 py-1 text-white font-semibold rounded-sm"
+            >
+              Save
+            </button>
+            <button
+              id="update"
+              type="button"
+              class="bg-orange-400 px-4 py-1 text-white font-semibold rounded-sm hidden"
+            >
+              Update
+            </button>
+            <button
+              id="delete"
+              type="button"
+              class="bg-red-600 px-4 py-1 text-white font-semibold rounded-sm hidden"
+            >
+              Delete
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- show  list -->
+    <main class="bg-slate-300 px-20">
+      <div class="bg-white min-h-[89vh]">
+        <!-- options -->
+        <section class="py-5 px-5 border-b-[1.5px] border-slate-300">
+          <button
+            id="add-contact"
+            class="bg-orange-400 text-white px-4 py-2 rounded font-semibold"
+          >
+            <span><i class="fas fa-plus"></i></span> Add Contact List
+          </button>
+        </section>
+        <!-- contact list -->
+        <section>
+          <table class="w-full">
+            <thead class="">
+              <tr>
+                <th class="py-4">Sno</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Labels</th>
+                <th>Email</th>
+                <th>Phone</th>
+              </tr>
+            </thead>
+            <tbody id="contact-list" class="text-center text-gray-500">
+              <!-- <tr class="hover:bg-orange-400 cursor-pointer">
+                <td class="py-4">1</td>
+                <td class="font-semibold text-gray-700">vijayavedhasekaran</td>
+                <td class="text-center">Johnson Street - 5668, Lake side</td>
+                <td>
+                  <span class="bg-slate-200 px-2 py-1 rounded text-gray-700"
+                    >Colleagues</span
+                  >
+                </td>
+                <td>sharif@gmail.com</td>
+                <td>123-456-7890</td>
+              </tr> -->
+            </tbody>
+          </table>
+        </section>
+      </div>
+    </main>
+    <script type="module" src="./src/js/app.js"></script>
   </body>
 </html>
